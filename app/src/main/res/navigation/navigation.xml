@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/moviesHomeFragment">
+
+    <fragment
+        android:id="@+id/moviesHomeFragment"
+        android:name="co.yap.master_detailapplication.ui.home.MoviesHomeFragment"
+        android:label="fragment_title_screen"
+        tools:layout="@layout/fragment_movies">
+        <action
+            android:id="@+id/action_moviesHomeFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="co.yap.master_detailapplication.ui.detail.MovieDetailFragment"
+        android:label="fragment_title_screen"
+        tools:layout="@layout/fragment_movies">
+        <argument
+            android:name="movie"
+            app:argType="co.yap.master_detailapplication.networking.models.Movie" />
+    </fragment>
+</navigation>
