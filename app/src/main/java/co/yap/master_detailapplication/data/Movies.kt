@@ -1,18 +1,11 @@
 package co.yap.master_detailapplication.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.google.gson.annotations.SerializedName
 
 
 @Entity(tableName = "movies")
 data class Movies(
-
-    @ColumnInfo(name = "username")
-    var Username: String,
-
-    @ColumnInfo(name = "password")
-    var Password: String,
 
     @ColumnInfo(name = "title")
     var title: String = "",
@@ -20,23 +13,24 @@ data class Movies(
     @ColumnInfo(name = "year")
     var year: String = "",
 
-    @ColumnInfo(name = "cast")
-    var cast: String = "",
-//    List<String>
+    @SerializedName("cast")
+    @TypeConverters(Converters::class)
+    val cast: List<String>,
 
-    @ColumnInfo(name = "genre")
-    var genre: String = "",
-//List<String>
+    @SerializedName("genre")
+    @TypeConverters(Converters::class)
+    val genre: List<String>,
 
     @ColumnInfo(name = "poster")
     var poster: String = "",
 
     @ColumnInfo(name = "rating")
-    var rating: Double = 0.0
+    var rating: Float
 
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var Id: Int? = null
 
-}
+ }
+

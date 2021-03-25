@@ -14,35 +14,39 @@ class DataRepository {
 
         var Movies: LiveData<Movies>? = null
 
+        var MoviesList: LiveData<List<Movies>>? = null
+
         fun initializeDB(context: Context): MoviesDatabase {
             return MoviesDatabase.getDataseClient(context)
         }
 
         fun insertData(
             context: Context,
-            username: String,
-            password: String,
             title: String,
             year: String,
-            cast: String,
-            genre: String,
+            cast: List<String>,
+            genre: List<String>,
             poster: String,
-            rating: Double
+            rating: Float
         ) {
 
             moviesDatabase = initializeDB(context)
 
             CoroutineScope(IO).launch {
-                val loginDetails =
-                    Movies(username, password, title, year, cast, genre, poster, rating)
-                moviesDatabase?.loginDao()?.InsertData(loginDetails)
+                val movieDetails =
+                    Movies(title, year, cast, genre, poster, rating)
+                moviesDatabase?.daOmovies()?.InsertData(movieDetails)
             }
-
         }
 
-        fun getLoginDetails(context: Context, username: String): LiveData<Movies>? {
-            Movies = moviesDatabase?.loginDao()?.getMovieDetails(username)
+        fun getMovieDetails(any: String): LiveData<Movies>? {
+            Movies = moviesDatabase?.daOmovies()?.getMovieDetails(any)
             return Movies
+        }
+
+        fun getAllMoviesList(any: String): LiveData<List<Movies>>? {
+            MoviesList = moviesDatabase?.daOmovies()?.getMoviesList(any)
+            return MoviesList
         }
     }
 }

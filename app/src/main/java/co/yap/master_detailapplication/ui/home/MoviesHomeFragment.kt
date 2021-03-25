@@ -1,6 +1,7 @@
 package co.yap.master_detailapplication.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.library.baseAdapters.BR
@@ -11,7 +12,6 @@ import co.yap.master_detailapplication.R
 import co.yap.master_detailapplication.base.BaseBindingFragment
 import co.yap.master_detailapplication.base.OnItemClickListener
 import co.yap.master_detailapplication.networking.models.Movie
-import com.android.tools.build.jetifier.core.utils.Log
 import com.test.androidcodechallenge.viewmodel.MoviesViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
 
@@ -22,21 +22,19 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
 
     override fun getLayoutId(): Int = R.layout.fragment_movies
 
-
     override val viewModel: MoviesInterface.ViewModel
         get() = ViewModelProviders.of(this).get(MoviesViewModel::class.java)
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setObservers()
         viewModel.moviesAdapter.setItemListener(movieItemClickListener)
         viewModel.moviesAdapter.allowFullItemClickListener = true
-        activity?.let { viewModel.getLoginDetails(it, "Username 1") }!!.observe(this, Observer {
-            Log.i("MoviesHomeFragment", it.Password)
-        })
 
+        activity?.let { viewModel.getAllMoviesFromDB(it, "2009") }!!.observe(this, Observer {
+            Log.i("MHFF", it.size.toString())
+
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,9 +50,7 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
                 )
             findNavController().navigate(action)
         }
-
     }
-
 
     override fun setObservers() {
         viewModel.searchQuery.observe(this, Observer {
@@ -79,10 +75,8 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
         })
     }
 
-
     override fun onDestroy() {
         viewModel.clickEvent.removeObservers(this)
         super.onDestroy()
     }
-
 }

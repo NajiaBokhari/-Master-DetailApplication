@@ -22,21 +22,20 @@ interface MoviesInterface {
         var moviesList: MoviesList
         val MOVIE_ITEM_CLICK: Int
         val clickEvent: SingleClickEvent
-        var liveDataLogin: LiveData<Movies>?
+        var movieLiveData: LiveData<Movies>?
+        var movieListLiveData: LiveData<List<Movies>>?
         fun getMoviesRequest()
-        fun getLoginDetails(context: Context, username: String): LiveData<Movies>?
+        fun getAllMoviesFromDB(any: String): LiveData<List<Movies>>?
+        fun getMovieDetails(any: String): LiveData<Movies>?
         fun insertData(
-            context: Context,
-            username: String,
-            password: String,
-            title: String,
-            year: String,
-            cast: String,
-            genre: String,
-            poster: String,
-            rating: Double
+                context: Context,
+                title: String,
+                year: String,
+                cast: ArrayList<String>,
+                genre: ArrayList<String>,
+                poster: String,
+                rating: Float
         )
-
     }
 
     interface State : IBase.State {

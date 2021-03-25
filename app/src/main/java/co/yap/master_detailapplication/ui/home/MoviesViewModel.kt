@@ -21,8 +21,8 @@ import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 class MoviesViewModel(application: Application) :
-    BaseViewModel<MoviesInterface.State>(application),
-    MoviesInterface.ViewModel, IRepositoryHolder<AuthRepository> {
+        BaseViewModel<MoviesInterface.State>(application),
+        MoviesInterface.ViewModel, IRepositoryHolder<AuthRepository> {
 
     override val MOVIE_ITEM_CLICK: Int = 100
 
@@ -31,7 +31,7 @@ class MoviesViewModel(application: Application) :
     override val clickEvent: SingleClickEvent = SingleClickEvent()
 
     override val state: MoviesInterface.State =
-        MoviesState()
+            MoviesState()
 
     override var moviesAdapter: MoviesAdapter = MoviesAdapter(mutableListOf())
 
@@ -39,36 +39,37 @@ class MoviesViewModel(application: Application) :
 
     override var searchQuery: MutableLiveData<String> = MutableLiveData()
 
-    override var liveDataLogin: LiveData<Movies>? = null
+    override var movieLiveData: LiveData<Movies>? = null
+    override var movieListLiveData: LiveData<List<Movies>>? = null
 
     override fun insertData(
-        context: Context,
-        username: String,
-        password: String,
-        title: String,
-        year: String,
-        cast: String,
-        genre: String,
-        poster: String,
-        rating: Double
+            context: Context,
+            title: String,
+            year: String,
+            cast: ArrayList<String>,
+            genre: ArrayList<String>,
+            poster: String,
+            rating: Float
     ) {
         DataRepository.insertData(
-            context,
-            username,
-            password,
-            title,
-            year,
-            cast,
-            genre,
-            poster,
-            rating
+                context,
+                title,
+                year,
+                cast,
+                genre,
+                poster,
+                rating
         )
     }
 
-    override fun getLoginDetails(context: Context, username: String): LiveData<Movies>? {
-        liveDataLogin = DataRepository.getLoginDetails(context, username)
+    override fun getMovieDetails( any: String): LiveData<Movies>? {
+        movieLiveData = DataRepository.getMovieDetails(any)
+        return movieLiveData
+    }
 
-        return liveDataLogin
+    override fun getAllMoviesFromDB( any: String): LiveData<List<Movies>>? {
+        movieListLiveData = DataRepository.getAllMoviesList( any)
+        return movieListLiveData
     }
 
     override fun onCreate() {
@@ -76,7 +77,6 @@ class MoviesViewModel(application: Application) :
         moviesAdapter.setList(moviesList.data)
 
     }
-
 
     override fun getMoviesRequest() {
 
@@ -112,24 +112,22 @@ class MoviesViewModel(application: Application) :
                 val movieRating: Float = parentArrayList.getString("rating").toFloat()
 
                 val movie: Movie = Movie(
-                    title = movieTitle,
-                    year = movieYear,
-                    cast = movieCast,
-                    genre = movieGenres,
-                    rating = movieRating,
-                    poster = ""
+                        title = movieTitle,
+                        year = movieYear,
+                        cast = movieCast,
+                        genre = movieGenres,
+                        rating = movieRating,
+                        poster = ""
                 )
 
                 insertData(
-                    context,
-                    "Username $i",
-                    "pass $i",
-                    movieTitle,
-                    movieYear,
-                    "cast",
-                    "genre",
-                    "poster",
-                    1.0
+                        context,
+                        movieTitle,
+                        movieYear,
+                        movieCast,
+                        movieGenres,
+                        "poster",
+                        movieRating
                 )
 
                 dataList.add(movie)
@@ -167,5 +165,4 @@ class MoviesViewModel(application: Application) :
         }
         return json
     }
-
 }
