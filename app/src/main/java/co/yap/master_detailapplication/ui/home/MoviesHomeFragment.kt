@@ -31,7 +31,13 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
         viewModel.moviesAdapter.setItemListener(movieItemClickListener)
         viewModel.moviesAdapter.allowFullItemClickListener = true
 
-        activity?.let { viewModel.getAllMoviesFromDB(it, "2009") }!!.observe(this, Observer {
+        viewModel.moviesSearchHeaderAdapter.setItemListener(movieItemClickListener)
+        viewModel.moviesSearchHeaderAdapter.allowFullItemClickListener = true
+
+//        viewModel.moviesAdapter.setItemListener(movieItemClickListener)
+//        viewModel.moviesAdapter.allowFullItemClickListener = true
+
+        activity?.let { viewModel.getAllMoviesFromDB("2010") }!!.observe(this, Observer {
             Log.i("MHFF", it.size.toString())
 
         })
@@ -55,6 +61,7 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
     override fun setObservers() {
         viewModel.searchQuery.observe(this, Observer {
             viewModel.moviesAdapter.filter.filter(it)
+            viewModel.moviesSearchHeaderAdapter.filter.filter(it)
         })
     }
 

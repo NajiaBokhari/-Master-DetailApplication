@@ -9,6 +9,7 @@ import co.yap.master_detailapplication.base.SingleClickEvent
 import co.yap.master_detailapplication.data.Movies
 import co.yap.master_detailapplication.networking.models.MoviesList
 import co.yap.master_detailapplication.ui.adapters.MoviesAdapter
+import co.yap.master_detailapplication.ui.adapters.MoviesSearchHeaderAdapter
 
 interface MoviesInterface {
 
@@ -19,6 +20,7 @@ interface MoviesInterface {
     interface ViewModel : IBase.ViewModel<State> {
         var searchQuery: MutableLiveData<String>
         var moviesAdapter: MoviesAdapter
+        var moviesSearchHeaderAdapter: MoviesSearchHeaderAdapter
         var moviesList: MoviesList
         val MOVIE_ITEM_CLICK: Int
         val clickEvent: SingleClickEvent

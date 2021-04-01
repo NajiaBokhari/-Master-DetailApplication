@@ -20,7 +20,7 @@ object BindingAdapter {
         if (null == adapter)
             return
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 3)
+//        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 3)
     }
 
     @BindingAdapter("src", "square")

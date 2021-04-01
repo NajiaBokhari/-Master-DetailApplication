@@ -7,7 +7,8 @@ import co.yap.master_detailapplication.networking.models.Movie
 class MoviesAdapterViewModel(
     val movie: Movie,
     val position: Int,
-    private val onItemClickListener: OnItemClickListener?
+    private val onItemClickListener: OnItemClickListener?,
+      val moviesSearchedTitlesAdapter: MoviesSearchedTitlesAdapter?=null
 ) {
     fun onViewClicked(view: View) {
         onItemClickListener?.onItemClick(view, movie, position)

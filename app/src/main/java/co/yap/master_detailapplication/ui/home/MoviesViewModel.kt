@@ -14,6 +14,7 @@ import co.yap.master_detailapplication.networking.models.MoviesList
 import co.yap.master_detailapplication.networking.models.RetroApiResponse
 import co.yap.master_detailapplication.networking.repository.AuthRepository
 import co.yap.master_detailapplication.ui.adapters.MoviesAdapter
+import co.yap.master_detailapplication.ui.adapters.MoviesSearchHeaderAdapter
 import co.yap.master_detailapplication.ui.home.MoviesInterface
 import co.yap.master_detailapplication.ui.home.MoviesState
 import org.json.JSONObject
@@ -35,11 +36,14 @@ class MoviesViewModel(application: Application) :
 
     override var moviesAdapter: MoviesAdapter = MoviesAdapter(mutableListOf())
 
+    override var moviesSearchHeaderAdapter: MoviesSearchHeaderAdapter = MoviesSearchHeaderAdapter(mutableListOf())
+
     override var moviesList: MoviesList = MoviesList(loadLocalMoviesList())
 
     override var searchQuery: MutableLiveData<String> = MutableLiveData()
 
     override var movieLiveData: LiveData<Movies>? = null
+
     override var movieListLiveData: LiveData<List<Movies>>? = null
 
     override fun insertData(
@@ -75,6 +79,7 @@ class MoviesViewModel(application: Application) :
     override fun onCreate() {
         super.onCreate()
         moviesAdapter.setList(moviesList.data)
+        moviesSearchHeaderAdapter.setList(moviesList.data)
 
     }
 

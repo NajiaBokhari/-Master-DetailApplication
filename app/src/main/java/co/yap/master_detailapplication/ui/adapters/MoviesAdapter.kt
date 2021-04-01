@@ -27,9 +27,9 @@ class MoviesAdapter(
 
     override fun filterItem(constraint: CharSequence?, item: Movie): Boolean {
         val filterString = constraint.toString().toLowerCase()
-        val currencyName = item.title?.toLowerCase()
-        if (currencyName != null) {
-            return currencyName.contains(filterString)
+        val title = item.title?.toLowerCase()
+        if (title != null) {
+            return title.contains(filterString)
         }
             return false
     }

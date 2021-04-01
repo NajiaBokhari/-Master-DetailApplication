@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="co.yap.master_detailapplication.ui.adapters.MoviesAdapterViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:foregroundGravity="left"
+        android:orientation="vertical"
+        android:paddingRight="5dp"
+        android:background="@color/yellow_accent">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSearchedMovieYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:text="@{viewModel.movie.year}"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/rvSearchedMovies"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="2020" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearchedMovies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSearchedMovieYear"
+            app:recycleViewAdapter="@{viewModel.moviesSearchedTitlesAdapter}"
+            tools:listitem="@layout/item_movie"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
