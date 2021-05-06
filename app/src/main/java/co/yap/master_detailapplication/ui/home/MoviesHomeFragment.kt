@@ -44,8 +44,7 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
 
     override fun setObservers() {
         viewModel.searchQuery.observe(this, Observer {
-//            viewModel.moviesAdapter.filter.filter(it)
-            viewModel.moviesSearchHeaderAdapter.filter.filter(it)
+             viewModel.moviesSearchHeaderAdapter.filter.filter(it)
         })
     }
 

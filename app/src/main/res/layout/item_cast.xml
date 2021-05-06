@@ -59,7 +59,7 @@
 
 
         <include
-            layout="@layout/item_flicker_images"
+            layout="@layout/layout_flicker_images"
             android:visibility="@{viewModel.type.equals(AdapterItemType.ITEM_IMAGE_TYPE.name) ? View.VISIBLE : View.GONE }"
             app:viewModel="@{viewModel}" />
 

@@ -9,8 +9,6 @@ import co.yap.master_detailapplication.base.BaseBindingRecyclerAdapter
 import co.yap.master_detailapplication.data.Movies
 import co.yap.master_detailapplication.databinding.ItemMovieSearchedTitleBinding
 import co.yap.master_detailapplication.databinding.ItemMovieYearHeaderBinding
-import co.yap.master_detailapplication.utils.SharedPreferencesHelper
-import com.android.tools.build.jetifier.core.utils.Log
 
 
 class MoviesSearchHeaderAdapter(
@@ -100,60 +98,33 @@ class MoviesSearchHeaderAdapter(
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             list.clear()
-            filterCount.value = results?.count//here should be sorted and viewtype blank year
-            segregateViews(results?.values as MutableList<Movies>)
-            list.addAll(results?.values as MutableList<Movies>)
+            filterCount.value = results?.count
+            val searchResults = segregateViews(results?.values as MutableList<Movies>)
+            list.addAll(searchResults)
             notifyDataSetChanged()
         }
     }
 
-    private fun updateLists() {
-        duplicate = mutableListOf()
-        duplicate.addAll(list)
-        filter = ItemFilter(list)
-    }
-
-fun segregateViews(searchedList:MutableList<Movies>){
-    var segregatedSearchedList:MutableList<Movies> = mutableListOf()
-    var hashSetObject = HashSet<Int>()
-         var moviesByYear: List<Movies>? = searchedList.sortedBy {
+    fun segregateViews(searchedList: MutableList<Movies>): MutableList<Movies> {
+        var segregatedSearchedList: MutableList<Movies> = mutableListOf()
+        var hashSetObject = HashSet<Int>()
+        var moviesByYear: List<Movies>? = searchedList.sortedBy {
             it.year
         }
-    searchedList.indices.forEach {
+        searchedList.indices.forEach {
             moviesByYear?.get(it)?.let { it1 -> hashSetObject.add(it1.year) }
         }
-
         hashSetObject.sorted().forEachIndexed { index, year ->
             segregatedSearchedList.add(Movies("", year, emptyList(), emptyList(), "", 0F))
 
-//            activity?.let { viewModel.getAllMoviesFromDB(movieAtIndex) }!!.observe(this, Observer { movies ->
-// apply filter of year in searchedList result movies object below
-            var movies: List<Movies>  = (searchedList.filter { it.year == year }).take(5)
-            var moviesMutableList : MutableList<Movies>  = movies as MutableList<Movies>
+            var movies: List<Movies> = (searchedList.filter { it.year == year }).take(5)
+            var moviesMutableList: MutableList<Movies> = movies as MutableList<Movies>
             segregatedSearchedList.addAll(moviesMutableList)
-//            var items :MutableList<Movies> =/ movies.values.filter { it -> it.rating  }
-//            items.sortedByDescending { sortedMovie -> sortedMovie.sortedByDescending { it -> it.rating } }
-//                    .take(5)
-//            segregatedSearchedList.addAll()
-//            segregatedSearchedList.addAll(movies.sortedByDescending { sortedMovie -> sortedMovie.rating }.take(5))
-            segregatedSearchedList.sortBy { sortedMovie ->
-                    sortedMovie.year
-                }
-//            Log.d("MHFF", index.toString() +","+ year.toString() +" , " +segregatedSearchedList.size)
-            Log.i("MHFF",   segregatedSearchedList.size.toString())
-println(index.toString() +","+ year.toString() +" , " +segregatedSearchedList)
-//                val sortedMovies = viewModel.sortedMovieListLiveData
-//                sortedMovies.sortBy { sortedMovie ->
-//                    sortedMovie.year
-//                }
-//                SharedPreferencesHelper.putList(sortedMovies)
-
-//                if (index == hashSetObject.size - 1) {
-//
-//                    viewModel.moviesSearchHeaderAdapter.setList(SharedPreferencesHelper.getList().distinct())
-//                }
-//            })
         }
- }
-    //
+        segregatedSearchedList.sortBy { sortedMovie ->
+            sortedMovie.year
+        }
+        segregatedSearchedList.distinct()
+        return segregatedSearchedList
+    }
 }
