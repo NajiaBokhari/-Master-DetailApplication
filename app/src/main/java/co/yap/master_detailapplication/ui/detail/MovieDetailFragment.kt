@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModelProviders
 import co.yap.master_detailapplication.R
 import co.yap.master_detailapplication.base.BaseBindingFragment
 import co.yap.master_detailapplication.data.Movies
-import co.yap.master_detailapplication.networking.models.Movie
 
 class MovieDetailFragment : BaseBindingFragment<MovieDetailInterface.ViewModel>(),
-    MovieDetailInterface.View {
+        MovieDetailInterface.View {
 
     override fun getBindingVariable(): Int = BR.viewModel
     override fun getLayoutId(): Int = R.layout.fragment_movie_detail

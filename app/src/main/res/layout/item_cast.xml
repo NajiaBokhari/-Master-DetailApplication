@@ -11,35 +11,39 @@
 
         <import type="android.view.View" />
 
+        <import type="co.yap.master_detailapplication.ui.adapters.AdapterItemType" />
+
+
     </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="120dp"
-            android:layout_height="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:foregroundGravity="left"
             android:orientation="vertical"
             android:paddingRight="5dp"
-            android:visibility="@{viewModel.castsList == false ? View.GONE : View.VISIBLE }">
+            android:visibility="@{viewModel.type.equals(AdapterItemType.ITEM_CAST_TYPE.name) ? View.VISIBLE : View.GONE }">
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvMovieTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="3"
                 android:paddingBottom="8dp"
                 android:text="@{viewModel.name}"
-                android:textColor="@color/white"
+                android:textColor="@color/red"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +54,13 @@
 
         <include
             layout="@layout/layout_genre"
-            android:visibility="@{viewModel.castsList ? View.GONE : View.VISIBLE }"
+            android:visibility="@{viewModel.type.equals(AdapterItemType.ITEM_GENRE_TYPE.name) ? View.VISIBLE : View.GONE }"
             app:viewModel="@{viewModel}" />
+
+<!--        <include-->
+<!--            layout="@layout/item_flicker_images"-->
+<!--            android:visibility="@{viewModel.type.equals(AdapterItemType.ITEM_IMAGE_TYPE.name) ? View.VISIBLE : View.GONE }"-->
+<!--            app:viewModel="@{viewModel}" />-->
+
     </LinearLayout>
 </layout>

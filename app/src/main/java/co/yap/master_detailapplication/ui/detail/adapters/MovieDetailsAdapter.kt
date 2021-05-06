@@ -4,9 +4,10 @@ import androidx.databinding.ViewDataBinding
 import co.yap.master_detailapplication.R
 import co.yap.master_detailapplication.base.BaseBindingRecyclerAdapter
 import co.yap.master_detailapplication.databinding.ItemCastBinding
+import co.yap.master_detailapplication.ui.adapters.AdapterItemType
 
 class MovieDetailsAdapter (
-    private val list: MutableList<String>, val isCastsList:Boolean
+    private val list: MutableList<String>, val adapterItemType: AdapterItemType
 ) : BaseBindingRecyclerAdapter<String, MovieDetailsItemViewHolder>(
     list
 ) {
@@ -21,8 +22,7 @@ class MovieDetailsAdapter (
 
     override fun onBindViewHolder(holder: MovieDetailsItemViewHolder, position: Int) {
         super.onBindViewHolder(holder, position)
-        holder.onBind(list[position], position,isCastsList)
+        holder.onBind(list[position], position,adapterItemType)
     }
 
-//    override fun filterItem(constraint: CharSequence?, item: String): Boolean { return false }
 }

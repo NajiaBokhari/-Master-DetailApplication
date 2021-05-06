@@ -84,13 +84,6 @@ class MoviesViewModel(application: Application) :
         return movieListLiveData
     }
 
-    override fun onCreate() {
-        super.onCreate()
-//        moviesAdapter.setList(moviesList.data)
-//        moviesSearchHeaderAdapter.setList(moviesList.data)
-
-    }
-
     override fun getMoviesRequest() {
 
         launch {
@@ -149,10 +142,7 @@ class MoviesViewModel(application: Application) :
             }
         }
 
-
-
         return dataList
-
     }
 
 

@@ -11,16 +11,17 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 object BindingAdapter {
     @JvmStatic
-    @BindingAdapter("recycleViewAdapter")
+    @BindingAdapter("recycleViewAdapter","grids")
     fun setRecycleViewAdapter(
         recyclerView: RecyclerView,
-        adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>?
+        adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>?,
+        grids:Int = 1
     ) {
 
         if (null == adapter)
             return
         recyclerView.adapter = adapter
-//        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 3)
+        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, grids)
     }
 
     @BindingAdapter("src", "square")

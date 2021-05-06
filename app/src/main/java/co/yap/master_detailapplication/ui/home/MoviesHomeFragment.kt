@@ -28,8 +28,8 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObservers()
-        viewModel.moviesAdapter.setItemListener(movieItemClickListener)
-        viewModel.moviesAdapter.allowFullItemClickListener = true
+//        viewModel.moviesAdapter.setItemListener(movieItemClickListener)
+//        viewModel.moviesAdapter.allowFullItemClickListener = true
         viewModel.moviesSearchHeaderAdapter.setItemListener(movieItemClickListener)
         viewModel.moviesSearchHeaderAdapter.allowFullItemClickListener = true
 //        viewModel.moviesAdapter.setItemListener(movieItemClickListener)
