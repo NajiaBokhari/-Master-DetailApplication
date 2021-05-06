@@ -2,10 +2,11 @@ package co.yap.master_detailapplication.ui.adapters
 
 import android.view.View
 import co.yap.master_detailapplication.base.OnItemClickListener
+import co.yap.master_detailapplication.data.Movies
 import co.yap.master_detailapplication.networking.models.Movie
 
 class MoviesAdapterViewModel(
-    val movie: Movie,
+    val movie: Movies,
     val position: Int,
     private val onItemClickListener: OnItemClickListener?,
       val moviesSearchedTitlesAdapter: MoviesSearchedTitlesAdapter?=null
@@ -13,4 +14,7 @@ class MoviesAdapterViewModel(
     fun onViewClicked(view: View) {
         onItemClickListener?.onItemClick(view, movie, position)
     }
+
+    var namee =movie.title +" " +movie.year
+
 }

@@ -46,10 +46,13 @@ class MoviesViewModel(application: Application) :
 
     override var movieListLiveData: LiveData<List<Movies>>? = null
 
+    override var sortedMovieListLiveData: ArrayList<Movies> = arrayListOf()
+
+
     override fun insertData(
             context: Context,
             title: String,
-            year: String,
+            year: Int,
             cast: ArrayList<String>,
             genre: ArrayList<String>,
             poster: String,
@@ -66,20 +69,25 @@ class MoviesViewModel(application: Application) :
         )
     }
 
-    override fun getMovieDetails( any: String): LiveData<Movies>? {
+    override fun getMovieDetails(any: String): LiveData<Movies>? {
         movieLiveData = DataRepository.getMovieDetails(any)
         return movieLiveData
     }
 
-    override fun getAllMoviesFromDB( any: String): LiveData<List<Movies>>? {
-        movieListLiveData = DataRepository.getAllMoviesList( any)
+    override fun getAllMoviesFromDB(year: Int): LiveData<List<Movies>>? {
+        movieListLiveData = DataRepository.getAllMoviesList(year)
+        return movieListLiveData
+    }
+
+    override fun getAllSortedMoviesFromDB(): LiveData<List<Movies>>? {
+        movieListLiveData = DataRepository.getAllSortedMoviesList()
         return movieListLiveData
     }
 
     override fun onCreate() {
         super.onCreate()
-        moviesAdapter.setList(moviesList.data)
-        moviesSearchHeaderAdapter.setList(moviesList.data)
+//        moviesAdapter.setList(moviesList.data)
+//        moviesSearchHeaderAdapter.setList(moviesList.data)
 
     }
 
@@ -104,6 +112,7 @@ class MoviesViewModel(application: Application) :
 
 
     fun loadLocalMoviesList(): ArrayList<Movie> {
+
         var dataList: ArrayList<Movie> = arrayListOf()
         val mainObj = JSONObject(loadTransactionFromJsonAssets(context))
         val mainDataList = mainObj.getJSONArray("movies")
@@ -111,7 +120,7 @@ class MoviesViewModel(application: Application) :
             for (i in 0 until mainDataList.length()) {
                 val parentArrayList = mainDataList.getJSONObject(i)
                 val movieTitle: String = parentArrayList.getString("title")
-                val movieYear: String = parentArrayList.getString("year")
+                val movieYear: Int = parentArrayList.getInt("year")
                 val movieCast: ArrayList<String> = getCasts(parentArrayList, "cast")
                 val movieGenres: ArrayList<String> = getCasts(parentArrayList, "genres")
                 val movieRating: Float = parentArrayList.getString("rating").toFloat()
@@ -136,8 +145,12 @@ class MoviesViewModel(application: Application) :
                 )
 
                 dataList.add(movie)
+
             }
         }
+
+
+
         return dataList
 
     }

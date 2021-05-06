@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:gravity="center"
-            android:text="@{viewModel.movie.year}"
+            android:text="@{viewModel.namee}"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"

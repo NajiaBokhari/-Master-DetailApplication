@@ -23,7 +23,7 @@ class DataRepository {
         fun insertData(
             context: Context,
             title: String,
-            year: String,
+            year: Int,
             cast: List<String>,
             genre: List<String>,
             poster: String,
@@ -44,8 +44,13 @@ class DataRepository {
             return Movies
         }
 
-        fun getAllMoviesList(any: String): LiveData<List<Movies>>? {
-            MoviesList = moviesDatabase?.daOmovies()?.getMoviesList(any)
+        fun getAllMoviesList(year: Int): LiveData<List<Movies>>? {
+            MoviesList = moviesDatabase?.daOmovies()?.getMoviesList(year)
+            return MoviesList
+        }
+
+        fun getAllSortedMoviesList(): LiveData<List<Movies>>? {
+            MoviesList = moviesDatabase?.daOmovies()?.getSortedMoviesList()
             return MoviesList
         }
     }

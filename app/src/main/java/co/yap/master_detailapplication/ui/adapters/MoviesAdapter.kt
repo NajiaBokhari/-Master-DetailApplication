@@ -3,12 +3,12 @@ package co.yap.master_detailapplication.ui.adapters
 import androidx.databinding.ViewDataBinding
 import co.yap.master_detailapplication.R
 import co.yap.master_detailapplication.base.BaseBindingRecyclerAdapter
+import co.yap.master_detailapplication.data.Movies
 import co.yap.master_detailapplication.databinding.ItemMovieBinding
-import co.yap.master_detailapplication.networking.models.Movie
 
 class MoviesAdapter(
-    private val list: MutableList<Movie>
-) : BaseBindingRecyclerAdapter<Movie, MoviesItemViewHolder>(
+    private val list: MutableList<Movies>
+) : BaseBindingRecyclerAdapter<Movies, MoviesItemViewHolder>(
     list
 ) {
 
@@ -24,13 +24,13 @@ class MoviesAdapter(
         super.onBindViewHolder(holder, position)
         holder.onBind(list[position], position, onItemClickListener)
     }
-
-    override fun filterItem(constraint: CharSequence?, item: Movie): Boolean {
-        val filterString = constraint.toString().toLowerCase()
-        val title = item.title?.toLowerCase()
-        if (title != null) {
-            return title.contains(filterString)
-        }
-            return false
-    }
+//
+//    override fun filterItem(constraint: CharSequence?, item: Movies): Boolean {
+//        val filterString = constraint.toString().toLowerCase()
+//        val title = item.title?.toLowerCase()
+//        if (title != null) {
+//            return title.contains(filterString)
+//        }
+//            return false
+//    }
 }

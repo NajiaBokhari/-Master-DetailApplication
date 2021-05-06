@@ -24,5 +24,5 @@ class MovieDetailsAdapter (
         holder.onBind(list[position], position,isCastsList)
     }
 
-    override fun filterItem(constraint: CharSequence?, item: String): Boolean { return false }
+//    override fun filterItem(constraint: CharSequence?, item: String): Boolean { return false }
 }

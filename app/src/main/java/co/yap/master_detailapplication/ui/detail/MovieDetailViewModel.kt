@@ -30,6 +30,4 @@ class MovieDetailViewModel(application: Application) :
 
     override fun getMoviesRequest() {
     }
-
-
 }

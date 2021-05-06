@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="@{viewModel.state.movie.year}"
+                android:text="@{Integer.toString(viewModel.state.movie.year)}"
                 android:textColor="@color/white"
                 android:textSize="14dp"
                 tools:text="@string/releasing_year_text" />

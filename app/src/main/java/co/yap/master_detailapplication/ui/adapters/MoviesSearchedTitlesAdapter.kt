@@ -3,12 +3,12 @@ package co.yap.master_detailapplication.ui.adapters
 import androidx.databinding.ViewDataBinding
 import co.yap.master_detailapplication.R
 import co.yap.master_detailapplication.base.BaseBindingRecyclerAdapter
+import co.yap.master_detailapplication.data.Movies
 import co.yap.master_detailapplication.databinding.ItemMovieSearchedTitleBinding
- import co.yap.master_detailapplication.networking.models.Movie
 
 class MoviesSearchedTitlesAdapter (
-    private val list: MutableList<Movie>
-) : BaseBindingRecyclerAdapter<Movie, MoviesItemTitleViewHolder>(
+    private val list: MutableList<Movies>
+) : BaseBindingRecyclerAdapter<Movies, MoviesItemTitleViewHolder>(
     list
 ) {
 
@@ -25,8 +25,8 @@ class MoviesSearchedTitlesAdapter (
         holder.onBind(list[position], position, onItemClickListener)
     }
 
-    override fun filterItem(constraint: CharSequence?, item: Movie): Boolean {
-
-        return false
-    }
+//    override fun filterItem(constraint: CharSequence?, item: Movies): Boolean {
+//
+//        return false
+//    }
 }

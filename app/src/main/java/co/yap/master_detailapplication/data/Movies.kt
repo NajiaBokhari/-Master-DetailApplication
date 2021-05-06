@@ -1,7 +1,10 @@
 package co.yap.master_detailapplication.data
 
+import android.os.Parcelable
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
+import java.io.Serializable
 
 
 @Entity(tableName = "movies")
@@ -11,7 +14,7 @@ data class Movies(
     var title: String = "",
 
     @ColumnInfo(name = "year")
-    var year: String = "",
+    var year: Int ,
 
     @SerializedName("cast")
     @TypeConverters(Converters::class)
@@ -27,7 +30,7 @@ data class Movies(
     @ColumnInfo(name = "rating")
     var rating: Float
 
-) {
+) : Serializable {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var Id: Int? = null

@@ -25,14 +25,17 @@ interface MoviesInterface {
         val MOVIE_ITEM_CLICK: Int
         val clickEvent: SingleClickEvent
         var movieLiveData: LiveData<Movies>?
+        var sortedMovieListLiveData: ArrayList<Movies>
         var movieListLiveData: LiveData<List<Movies>>?
         fun getMoviesRequest()
-        fun getAllMoviesFromDB(any: String): LiveData<List<Movies>>?
+        fun getAllSortedMoviesFromDB(): LiveData<List<Movies>>?
+        fun getAllMoviesFromDB(year: Int): LiveData<List<Movies>>?
         fun getMovieDetails(any: String): LiveData<Movies>?
+
         fun insertData(
                 context: Context,
                 title: String,
-                year: String,
+                year: Int,
                 cast: ArrayList<String>,
                 genre: ArrayList<String>,
                 poster: String,

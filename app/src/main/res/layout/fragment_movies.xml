@@ -34,19 +34,19 @@
             app:queryBackground="@null"
             app:queryHint="@string/search_hint" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovies"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="10dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/svMovies"
-            app:recycleViewAdapter="@{viewModel.moviesAdapter}"
-            tools:listitem="@layout/item_movie"
-            android:visibility="gone"/>
+        <!--        <androidx.recyclerview.widget.RecyclerView-->
+        <!--            android:id="@+id/rvMovies"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="24dp"-->
+        <!--            android:layout_marginBottom="10dp"-->
+        <!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+        <!--             app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--            app:layout_constraintRight_toRightOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/svMovies"-->
+        <!--            app:recycleViewAdapter="@{viewModel.moviesAdapter}"-->
+        <!--            tools:listitem="@layout/item_movie"-->
+        <!--            android:visibility="visible"/>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSearchesResults"
@@ -54,8 +54,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="10dp"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/svMovies"
             app:recycleViewAdapter="@{viewModel.moviesSearchHeaderAdapter}"
