@@ -15,15 +15,15 @@
         android:id="@+id/tvMovieTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         android:background="@drawable/card_border_container"
+        android:layout_margin="8dp"
+        android:background="@drawable/card_border_container"
         android:gravity="center"
         android:padding="12dp"
-        android:layout_margin="8dp"
         android:singleLine="true"
         android:text="@{viewModel.name}"
         android:textColor="@color/red"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-         tools:text="genre" />
+        tools:text="genre" />
 </layout>

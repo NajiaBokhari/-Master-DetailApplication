@@ -27,6 +27,7 @@ class MovieDetailViewModel(application: Application) :
 
       state.movie.get()?.genre?.let {genreAdapter.setList(it) }
       state.movie.get()?.cast?.let {castAdapter.setList(it) }
+      state.movie.get()?.cast?.let {flickerAdapter.setList(it) }
     }
 
 

@@ -62,8 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
-                android:text="@string/genre_text"
                 android:gravity="center"
+                android:text="@string/genre_text"
                 android:textColor="@color/red"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -72,26 +72,26 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvGenre"
+                grids="@{2}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/svMovies"
                 app:recycleViewAdapter="@{viewModel.genreAdapter}"
-               grids="@{2}"
                 tools:listitem="@layout/item_cast" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/cast_text"
                 android:gravity="center"
+                android:text="@string/cast_text"
                 android:textColor="@color/red"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -100,18 +100,18 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCasts"
+                grids="@{2}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal"
                 android:gravity="center"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/svMovies"
                 app:recycleViewAdapter="@{viewModel.castAdapter}"
-            grids="@{2}"
                 tools:listitem="@layout/item_cast" />
 
             <TextView
@@ -119,29 +119,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:gravity="center"
                 android:text="@string/flicker_image_text"
                 android:textColor="@color/red"
-                android:gravity="center"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/rvCasts"
-                />
+                android:visibility="@{viewModel.state.movie.cast.size() > 0 ? View.VISIBLE : View.GONE }" />
+
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFlickerImages"
+                grids="@{3}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="10dp"
+                android:nestedScrollingEnabled="false"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvFlickerCaption"
                 app:recycleViewAdapter="@{viewModel.flickerAdapter}"
-                grids="@{3}"
-                tools:listitem="@layout/item_flicker_images"
-                android:nestedScrollingEnabled="false"/>
+                />
         </LinearLayout>
     </ScrollView>
 </layout>
