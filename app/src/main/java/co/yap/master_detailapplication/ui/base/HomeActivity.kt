@@ -7,7 +7,7 @@ import co.yap.master_detailapplication.R
 import co.yap.master_detailapplication.base.BaseActivity
 
 class HomeActivity : BaseActivity<HomeInterface.ViewModel>(),
-    HomeInterface.View {
+        HomeInterface.View {
 
     override fun getBindingVariable(): Int = BR.viewModel
 
@@ -19,7 +19,7 @@ class HomeActivity : BaseActivity<HomeInterface.ViewModel>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        hideKeyboard()
     }
 
     override fun onDestroy() {

@@ -7,7 +7,6 @@ interface IBase {
 
     interface View<V : ViewModel<*>> : NetworkConnectionManager.OnNetworkStateChangeListener {
         val viewModel: V
-        fun showLoader(isVisible: Boolean)
         fun showToast(msg: String)
         fun showInternetSnack(isVisible: Boolean)
     }
@@ -19,10 +18,7 @@ interface IBase {
 
     interface State {
         var toast: String
-        var loading: Boolean
-        var toolbarTitle: String
         var error: String
-        fun reset()
         fun destroy()
         fun init()
         fun resume()

@@ -87,16 +87,13 @@ class MoviesViewModel(application: Application) :
     override fun getMoviesRequest() {
 
         launch {
-            state.loading = true
             when (val response = repository.getMovies()) {
                 is RetroApiResponse.Success -> {
                     moviesList = response.data
                     clickEvent.setValue(MOVIE_ITEM_CLICK)
-                    state.loading = false
                 }
 
                 is RetroApiResponse.Error -> {
-                    state.loading = false
                     state.error = response.error.message
                 }
             }

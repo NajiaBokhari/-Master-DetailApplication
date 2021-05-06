@@ -7,19 +7,6 @@ import androidx.databinding.library.baseAdapters.BR
 
 abstract class BaseState : BaseObservable(), IBase.State {
 
-    @get:Bindable
-    override var loading: Boolean = false
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.loading)
-        }
-
-    @get:Bindable
-    override var toolbarTitle: String = ""
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.toolbarTitle)
-        }
 
     @get:Bindable
     override var error: String = ""
@@ -34,13 +21,6 @@ abstract class BaseState : BaseObservable(), IBase.State {
             field = value
             notifyPropertyChanged(BR.toast)
         }
-
-    override fun reset() {
-        loading = false
-        toolbarTitle = ""
-        error = ""
-        toast = ""
-    }
 
     override fun destroy() {
 

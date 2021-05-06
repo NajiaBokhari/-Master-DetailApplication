@@ -2,10 +2,8 @@ package co.yap.master_detailapplication.base
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseBindingRecyclerAdapter<T : Any, VH : RecyclerView.ViewHolder>() :
@@ -13,16 +11,11 @@ abstract class BaseBindingRecyclerAdapter<T : Any, VH : RecyclerView.ViewHolder>
 
     var onItemClickListener: OnItemClickListener? = null
     var allowFullItemClickListener: Boolean = false
-//    lateinit var filter: ItemFilter
     private lateinit var list: MutableList<T>
-//    var filterCount = MutableLiveData<Int>()
-//    private lateinit var duplicate: MutableList<T>
 
     constructor(list: MutableList<T>) : this() {
         this.list = list
-//        duplicate = mutableListOf()
-//        this.duplicate.addAll(list)
-//        filter = ItemFilter(list)
+        this.list.distinct()
     }
 
     protected abstract fun onCreateViewHolder(binding: ViewDataBinding): VH
@@ -53,7 +46,6 @@ abstract class BaseBindingRecyclerAdapter<T : Any, VH : RecyclerView.ViewHolder>
     }
 
     fun getDataForPosition(position: Int): T {
-        //if (position > list.size - 1)
         return list[position]
     }
 
@@ -69,14 +61,7 @@ abstract class BaseBindingRecyclerAdapter<T : Any, VH : RecyclerView.ViewHolder>
         this.list.clear()
         this.list.addAll(list)
         notifyDataSetChanged()
-        updateLists()
 
-    }
-
-    private fun updateLists() {
-//        duplicate = mutableListOf()
-//        duplicate.addAll(list)
-//        filter = ItemFilter(list)
     }
 
     fun addListItem(list: T) {
@@ -117,39 +102,4 @@ abstract class BaseBindingRecyclerAdapter<T : Any, VH : RecyclerView.ViewHolder>
         }
     }
 
-//    abstract fun filterItem(constraint: CharSequence?, item: T): Boolean
-//    inner class ItemFilter(private val dataList: MutableList<T>) : Filter() {
-//
-//        override fun performFiltering(constraint: CharSequence?): FilterResults {
-//
-//            val filterString = constraint.toString().toLowerCase()
-//            val results = FilterResults()
-//            val list = mutableListOf<T>()
-//            list.addAll(duplicate)
-//
-//            val count = list.size
-//            val nlist = ArrayList<T>(count)
-//
-//            if (!constraint.isNullOrEmpty()) {
-//                for (i in 0 until count) {
-//                    if (filterItem(constraint, list[i])) {
-//                        nlist.add(list[i])
-//                    }
-//                }
-//            } else {
-//                nlist.addAll(list)
-//            }
-//
-//            results.values = nlist
-//            results.count = nlist.size
-//            return results
-//        }
-//
-//        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-//            list.clear()
-//            filterCount.value = results?.count//here should be sorted and viewtype blank year
-//            list.addAll(results?.values as MutableList<T>)
-//            notifyDataSetChanged()
-//        }
-//    }
 }

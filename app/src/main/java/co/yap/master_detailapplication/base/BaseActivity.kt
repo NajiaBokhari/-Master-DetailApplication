@@ -1,14 +1,12 @@
 package co.yap.master_detailapplication.base
 
 import android.app.Activity
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
@@ -24,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 
 
 abstract class BaseActivity<V : IBase.ViewModel<*>> : AppCompatActivity(), IBase.View<V>,
-    NetworkConnectionManager.OnNetworkStateChangeListener {
+        NetworkConnectionManager.OnNetworkStateChangeListener {
     lateinit var viewDataBinding: ViewDataBinding
 
     private var snackbar: Snackbar? = null
@@ -33,21 +31,13 @@ abstract class BaseActivity<V : IBase.ViewModel<*>> : AppCompatActivity(), IBase
 
     private var checkConnectivity: Boolean = true
 
-    private var progress: Dialog? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         performDataBinding()
-
-        this.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        this.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-
         NetworkConnectionManager.init(this)
         NetworkConnectionManager.subscribe(this)
         registerStateListeners()
-
     }
-
 
     private fun performDataBinding() {
         viewDataBinding = DataBindingUtil.setContentView(this, getLayoutId())
@@ -84,47 +74,42 @@ abstract class BaseActivity<V : IBase.ViewModel<*>> : AppCompatActivity(), IBase
 
     private fun showNoInternetSnackBar() {
         snackbar = setSnackBar(
-            this,
-            getString(R.string.common_display_text_error_no_internet),
-            Snackbar.LENGTH_INDEFINITE
+                this,
+                getString(R.string.common_display_text_error_no_internet),
+                Snackbar.LENGTH_INDEFINITE
         )
-            .setAction(
-                "Settings"
-            ) { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
-            .setActionTextColor(applicationContext.resources.getColor(R.color.colorAccent))
+                .setAction(
+                        "Settings"
+                ) { startActivity(Intent(Settings.ACTION_WIFI_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                .setActionTextColor(applicationContext.resources.getColor(R.color.colorAccent))
         snackbar?.show()
     }
 
     private fun showInternetConnectedSnackBar() {
         val snackbarConnected = setSnackBar(
-            this,
-            "Internet connected.",
-            Snackbar.LENGTH_SHORT
+                this,
+                "Internet connected.",
+                Snackbar.LENGTH_SHORT
         )
         snackbarConnected.show()
         snackbar?.dismiss()
     }
 
-    override fun showLoader(isVisible: Boolean) {
-        if (isVisible) progress?.show() else progress?.dismiss()
-        hideKeyboard(this.window.decorView)
-    }
-
     private fun setSnackBar(activity: Activity, message: String, duration: Int): Snackbar {
         val layout: View
         val snackbar = Snackbar
-            .make(activity.findViewById(android.R.id.content), message, duration)
+                .make(activity.findViewById(android.R.id.content), message, duration)
         layout = snackbar.view
         layout.setBackgroundColor(activity.resources.getColor(R.color.colorAccent))
         val text =
-            layout.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+                layout.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
         text.setTextColor(Color.WHITE)
 
         if (duration == DURATION_CODE) {
             layout.setBackgroundColor(activity.resources.getColor(R.color.colorAccent))
             val snackbarView = snackbar.view
             val textView =
-                snackbarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+                    snackbarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
             textView.setTextColor(Color.WHITE)
         }
         return snackbar
@@ -133,7 +118,6 @@ abstract class BaseActivity<V : IBase.ViewModel<*>> : AppCompatActivity(), IBase
     override fun onDestroy() {
         NetworkConnectionManager.unsubscribe(this)
         unregisterStateListeners()
-        progress?.dismiss()
         super.onDestroy()
     }
 
@@ -141,9 +125,6 @@ abstract class BaseActivity<V : IBase.ViewModel<*>> : AppCompatActivity(), IBase
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             if (propertyId == BR.toast && viewModel.state.toast.isNotBlank()) {
                 showToast(viewModel.state.toast)
-            }
-            if (propertyId == BR.loading) {
-                showLoader(viewModel.state.loading)
             }
         }
     }
@@ -169,7 +150,7 @@ abstract class BaseActivity<V : IBase.ViewModel<*>> : AppCompatActivity(), IBase
     fun hideKeyboard(view: View?) {
         view?.let { v ->
             val imm =
-                view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                    view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(v.windowToken, 0)
         }
     }

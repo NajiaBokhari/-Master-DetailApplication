@@ -65,15 +65,10 @@ class MoviesSearchHeaderAdapter(
         return false
     }
 
-
-    /////
-
-
     inner class ItemFilter(private val dataList: MutableList<Movies>) : Filter() {
 
         override fun performFiltering(constraint: CharSequence?): FilterResults {
 
-            val filterString = constraint.toString().toLowerCase()
             val results = FilterResults()
             val list = mutableListOf<Movies>()
             list.addAll(duplicate)
@@ -81,7 +76,7 @@ class MoviesSearchHeaderAdapter(
             val count = list.size
             val nlist = ArrayList<Movies>(count)
 
-            if (!constraint.isNullOrEmpty()) {
+            if (!constraint.isNullOrEmpty() && !constraint.isNullOrBlank()) {
                 for (i in 0 until count) {
                     if (filterItem(constraint, list[i])) {
                         nlist.add(list[i])
@@ -97,34 +92,42 @@ class MoviesSearchHeaderAdapter(
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            list.clear()
+          if (results?.values != null)  {
+              list.clear()
+
             filterCount.value = results?.count
             val searchResults = segregateViews(results?.values as MutableList<Movies>)
-            list.addAll(searchResults)
+            list.addAll(searchResults.distinct())
             notifyDataSetChanged()
+        }else{
+
         }
+        }
+
+        fun segregateViews(searchedList: MutableList<Movies>): MutableList<Movies> {
+            var segregatedSearchedList: MutableList<Movies> = mutableListOf()
+            var hashSetObject = HashSet<Int>()
+            var moviesByYear: List<Movies>? = searchedList.sortedBy {
+                it.year
+            }
+            searchedList.indices.forEach {
+                moviesByYear?.get(it)?.let { it1 -> hashSetObject.add(it1.year) }
+            }
+            hashSetObject.sorted().forEachIndexed { index, year ->
+                segregatedSearchedList.add(Movies("", year, emptyList(), emptyList(), "", 0F))
+
+                var movies: List<Movies> = (searchedList.filter { it.year == year }).take(5)
+                var moviesMutableList: MutableList<Movies> = movies as MutableList<Movies>
+                segregatedSearchedList.addAll(moviesMutableList)
+            }
+            segregatedSearchedList.sortBy { sortedMovie ->
+                sortedMovie.year
+            }
+            segregatedSearchedList.distinct()
+            return segregatedSearchedList
+        }
+
     }
 
-    fun segregateViews(searchedList: MutableList<Movies>): MutableList<Movies> {
-        var segregatedSearchedList: MutableList<Movies> = mutableListOf()
-        var hashSetObject = HashSet<Int>()
-        var moviesByYear: List<Movies>? = searchedList.sortedBy {
-            it.year
-        }
-        searchedList.indices.forEach {
-            moviesByYear?.get(it)?.let { it1 -> hashSetObject.add(it1.year) }
-        }
-        hashSetObject.sorted().forEachIndexed { index, year ->
-            segregatedSearchedList.add(Movies("", year, emptyList(), emptyList(), "", 0F))
 
-            var movies: List<Movies> = (searchedList.filter { it.year == year }).take(5)
-            var moviesMutableList: MutableList<Movies> = movies as MutableList<Movies>
-            segregatedSearchedList.addAll(moviesMutableList)
-        }
-        segregatedSearchedList.sortBy { sortedMovie ->
-            sortedMovie.year
-        }
-        segregatedSearchedList.distinct()
-        return segregatedSearchedList
-    }
 }
