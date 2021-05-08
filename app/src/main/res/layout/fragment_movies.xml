@@ -7,15 +7,15 @@
 
         <variable
             name="viewModel"
-            type="com.test.androidcodechallenge.viewmodel.MoviesViewModel" />
+            type="co.assignment.master_detailapplication.ui.home.MoviesViewModel" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clYapScreenContainer"
+        android:id="@+id/clScreenContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-          android:paddingTop="16dp">
+        android:paddingTop="16dp">
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/svMovies"
@@ -25,7 +25,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginRight="4dp"
             android:background="@drawable/rounded_grey"
-              app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:queryBackground="@null"
@@ -59,6 +59,4 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </layout>

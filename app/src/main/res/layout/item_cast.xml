@@ -7,11 +7,11 @@
 
         <variable
             name="viewModel"
-            type="co.yap.master_detailapplication.ui.detail.adapters.MovieDetailsItemViewModel" />
+            type="co.assignment.master_detailapplication.ui.detail.adapters.MovieDetailsItemViewModel" />
 
         <import type="android.view.View" />
 
-        <import type="co.yap.master_detailapplication.ui.adapters.AdapterItemType" />
+        <import type="co.assignment.master_detailapplication.ui.adapters.AdapterItemType" />
 
 
     </data>

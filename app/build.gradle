@@ -18,7 +18,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "co.yap.master_detailapplication"
+        applicationId "co.assignment.master_detailapplication"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
@@ -90,20 +90,12 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
-
     // - - Room Persistence Library
     def room_version = "2.2.5"
 
     implementation "androidx.room:room-runtime:2.4.0-alpha01"
     kapt "androidx.room:room-compiler:2.4.0-alpha01"
-    // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.4.0-alpha01"
 
-//    //room
-//    implementation "androidx.room:room-runtime:$project.room_version"
-//    annotationProcessor "androidx.room:room-compiler:$project.room_version"
-    //room
-//    implementation 'android.arch.persistence.room:runtime:1.0.0'
-//    annotationProcessor"android.arch.persistence.room:compiler:1.0.0"
 
 }

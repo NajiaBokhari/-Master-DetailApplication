@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="co.yap.master_detailapplication.ui.adapters.MoviesAdapterViewModel" />
+            type="co.assignment.master_detailapplication.ui.adapters.MoviesAdapterViewModel" />
 
     </data>
 

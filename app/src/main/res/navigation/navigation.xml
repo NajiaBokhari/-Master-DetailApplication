@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/moviesHomeFragment"
-        android:name="co.yap.master_detailapplication.ui.home.MoviesHomeFragment"
+        android:name="co.assignment.master_detailapplication.ui.home.MoviesHomeFragment"
         android:label="fragment_title_screen"
         tools:layout="@layout/fragment_movies">
         <action
@@ -21,11 +21,11 @@
 
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="co.yap.master_detailapplication.ui.detail.MovieDetailFragment"
+        android:name="co.assignment.master_detailapplication.ui.detail.MovieDetailFragment"
         android:label="fragment_title_screen"
         tools:layout="@layout/fragment_movies">
         <argument
             android:name="movies"
-            app:argType="co.yap.master_detailapplication.data.Movies" />
+            app:argType="co.assignment.master_detailapplication.data.Movies" />
     </fragment>
 </navigation>

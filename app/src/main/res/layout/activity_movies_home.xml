@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="co.yap.master_detailapplication.ui.base.HomeViewModel" />
+            type="co.assignment.master_detailapplication.ui.base.HomeViewModel" />
     </data>
 
     <FrameLayout

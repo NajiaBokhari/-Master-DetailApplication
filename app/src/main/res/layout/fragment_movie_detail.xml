@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="co.yap.master_detailapplication.ui.detail.MovieDetailViewModel" />
+            type="co.assignment.master_detailapplication.ui.detail.MovieDetailViewModel" />
     </data>
 
     <ScrollView
