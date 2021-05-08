@@ -2,7 +2,6 @@ package co.yap.master_detailapplication.ui.adapters
 
 import android.widget.Filter
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import co.yap.master_detailapplication.R
 import co.yap.master_detailapplication.base.BaseBindingRecyclerAdapter
@@ -12,29 +11,22 @@ import co.yap.master_detailapplication.databinding.ItemMovieYearHeaderBinding
 
 
 class MoviesSearchHeaderAdapter(
-        list: MutableList<Movies>
-) : BaseBindingRecyclerAdapter<Movies, RecyclerView.ViewHolder>(list) {
+        private var moviesList: MutableList<Movies>
+) : BaseBindingRecyclerAdapter<Movies, RecyclerView.ViewHolder>(moviesList) {
 
     companion object {
         const val VIEW_TYPE_ONE = 1
         const val VIEW_TYPE_TWO = 2
     }
 
-    var filterCount = MutableLiveData<Int>()
+    var filter: ItemFilter = ItemFilter()
+    private var filteredMoviesList: MutableList<Movies> = moviesList
 
-    var list: ArrayList<Movies> = list as ArrayList<Movies>
-    var filter: ItemFilter = ItemFilter(list)
-    private var duplicate: MutableList<Movies> = list
-
-
-    override fun getLayoutIdForViewType(viewType: Int): Int =
-            if (viewType == VIEW_TYPE_ONE) R.layout.item_movie_year_header else R.layout.item_movie_searched_title
-
+    override fun getLayoutIdForViewType(viewType: Int): Int = if (viewType == VIEW_TYPE_ONE) R.layout.item_movie_year_header else R.layout.item_movie_searched_title
 
     override fun onCreateViewHolder(binding: ViewDataBinding): RecyclerView.ViewHolder {
-
         return if (binding is ItemMovieYearHeaderBinding) {
-            MoviesItemYearViewHolder(binding as ItemMovieYearHeaderBinding)
+            MoviesItemYearViewHolder(binding)
         } else {
             MoviesItemTitleViewHolder(binding as ItemMovieSearchedTitleBinding)
         }
@@ -44,64 +36,51 @@ class MoviesSearchHeaderAdapter(
         super.onBindViewHolder(holder, position)
 
         if (holder is MoviesItemYearViewHolder) {
-            (holder as MoviesItemYearViewHolder).onBind(list[position], position, onItemClickListener)
+            holder.onBind(moviesList[position], position, onItemClickListener)
         } else {
             if (holder is MoviesItemTitleViewHolder)
-                (holder as MoviesItemTitleViewHolder).onBind(list[position], position, onItemClickListener)
+                holder.onBind(moviesList[position], position, onItemClickListener)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (list[position].title.isNullOrEmpty()) VIEW_TYPE_ONE else VIEW_TYPE_TWO
+        return if (moviesList.distinct()[position].title.isNullOrEmpty()) VIEW_TYPE_ONE else VIEW_TYPE_TWO
     }
 
-
-    fun filterItem(constraint: CharSequence?, item: Movies): Boolean {
-        val filterString = constraint.toString().toLowerCase()
-        val title = item.title?.toLowerCase()
-        if (title != null) {
-            return title.contains(filterString)
-        }
-        return false
+    override fun getItemCount(): Int {
+        return moviesList.size
     }
 
-    inner class ItemFilter(private val dataList: MutableList<Movies>) : Filter() {
-
+    inner class ItemFilter() : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-
-            val results = FilterResults()
-            val list = mutableListOf<Movies>()
-            list.addAll(duplicate)
-
-            val count = list.size
-            val nlist = ArrayList<Movies>(count)
-
-            if (!constraint.isNullOrEmpty() && !constraint.isNullOrBlank()) {
-                for (i in 0 until count) {
-                    if (filterItem(constraint, list[i])) {
-                        nlist.add(list[i])
+            val charString = constraint.toString()
+            if (charString.isEmpty() || charString.isBlank()) {
+                moviesList = filteredMoviesList
+            } else {
+                val filteredList = java.util.ArrayList<Movies>()
+                for (movies in moviesList) {
+                    if (movies.title.toLowerCase().contains(charString)) {
+                        filteredList.add(movies)
                     }
                 }
-            } else {
-                nlist.addAll(list)
+                moviesList = filteredList
             }
 
-            results.values = nlist
-            results.count = nlist.size
-            return results
+            val filterResults = Filter.FilterResults()
+            filterResults.values = moviesList
+
+            return filterResults
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-          if (results?.values != null)  {
-              list.clear()
-
-            filterCount.value = results?.count
-            val searchResults = segregateViews(results?.values as MutableList<Movies>)
-            list.addAll(searchResults.distinct())
-            notifyDataSetChanged()
-        }else{
-
-        }
+            if (results?.values != null && constraint.toString().isNotEmpty() && constraint.toString().isNotBlank()) {
+                val searchResults = segregateViews(results?.values as MutableList<Movies>)
+                moviesList = searchResults
+                notifyDataSetChanged()
+            } else {
+                moviesList = filteredMoviesList
+                notifyDataSetChanged()
+            }
         }
 
         fun segregateViews(searchedList: MutableList<Movies>): MutableList<Movies> {
@@ -113,21 +92,18 @@ class MoviesSearchHeaderAdapter(
             searchedList.indices.forEach {
                 moviesByYear?.get(it)?.let { it1 -> hashSetObject.add(it1.year) }
             }
-            hashSetObject.sorted().forEachIndexed { index, year ->
+            hashSetObject.sorted().forEach { year ->
                 segregatedSearchedList.add(Movies("", year, emptyList(), emptyList(), "", 0F))
-
-                var movies: List<Movies> = (searchedList.filter { it.year == year }).take(5)
+                segregatedSearchedList.distinct()
+                var movies: List<Movies> = (searchedList.filter { it.year == year })
+                movies = (movies.sortedByDescending { sortedMovie ->
+                    sortedMovie.rating
+                }).take(5)
                 var moviesMutableList: MutableList<Movies> = movies as MutableList<Movies>
-                segregatedSearchedList.addAll(moviesMutableList)
-            }
-            segregatedSearchedList.sortBy { sortedMovie ->
-                sortedMovie.year
+                segregatedSearchedList.addAll(moviesMutableList.distinct())
             }
             segregatedSearchedList.distinct()
             return segregatedSearchedList
         }
-
     }
-
-
 }

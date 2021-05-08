@@ -63,7 +63,7 @@ abstract class BaseBindingFragment<V : IBase.ViewModel<*>> : Fragment(), IBase.V
         getBaseView()?.onNetworkStateChanged(isConnected)
     }
 
-    fun onBackPressed(): Boolean = false
+    fun onBackPressed(): Boolean = true
 
     private val stateObserver = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {

@@ -8,13 +8,8 @@ import co.yap.master_detailapplication.networking.models.Movie
 class MoviesAdapterViewModel(
     val movie: Movies,
     val position: Int,
-    private val onItemClickListener: OnItemClickListener?,
-      val moviesSearchedTitlesAdapter: MoviesSearchedTitlesAdapter?=null
-) {
+    private val onItemClickListener: OnItemClickListener?) {
     fun onViewClicked(view: View) {
         onItemClickListener?.onItemClick(view, movie, position)
     }
-
-    var namee =movie.title +" " +movie.year
-
 }

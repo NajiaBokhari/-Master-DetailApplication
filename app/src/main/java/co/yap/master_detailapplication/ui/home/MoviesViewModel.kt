@@ -13,7 +13,6 @@ import co.yap.master_detailapplication.networking.models.Movie
 import co.yap.master_detailapplication.networking.models.MoviesList
 import co.yap.master_detailapplication.networking.models.RetroApiResponse
 import co.yap.master_detailapplication.networking.repository.AuthRepository
-import co.yap.master_detailapplication.ui.adapters.MoviesAdapter
 import co.yap.master_detailapplication.ui.adapters.MoviesSearchHeaderAdapter
 import co.yap.master_detailapplication.ui.home.MoviesInterface
 import co.yap.master_detailapplication.ui.home.MoviesState
@@ -22,8 +21,8 @@ import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 class MoviesViewModel(application: Application) :
-        BaseViewModel<MoviesInterface.State>(application),
-        MoviesInterface.ViewModel, IRepositoryHolder<AuthRepository> {
+    BaseViewModel<MoviesInterface.State>(application),
+    MoviesInterface.ViewModel, IRepositoryHolder<AuthRepository> {
 
     override val MOVIE_ITEM_CLICK: Int = 100
 
@@ -32,11 +31,10 @@ class MoviesViewModel(application: Application) :
     override val clickEvent: SingleClickEvent = SingleClickEvent()
 
     override val state: MoviesInterface.State =
-            MoviesState()
+        MoviesState()
 
-    override var moviesAdapter: MoviesAdapter = MoviesAdapter(mutableListOf())
-
-    override var moviesSearchHeaderAdapter: MoviesSearchHeaderAdapter = MoviesSearchHeaderAdapter(mutableListOf())
+    override var moviesSearchHeaderAdapter: MoviesSearchHeaderAdapter =
+        MoviesSearchHeaderAdapter(mutableListOf())
 
     override var moviesList: MoviesList = MoviesList(loadLocalMoviesList())
 
@@ -50,22 +48,22 @@ class MoviesViewModel(application: Application) :
 
 
     override fun insertData(
-            context: Context,
-            title: String,
-            year: Int,
-            cast: ArrayList<String>,
-            genre: ArrayList<String>,
-            poster: String,
-            rating: Float
+        context: Context,
+        title: String,
+        year: Int,
+        cast: ArrayList<String>,
+        genre: ArrayList<String>,
+        poster: String,
+        rating: Float
     ) {
         DataRepository.insertData(
-                context,
-                title,
-                year,
-                cast,
-                genre,
-                poster,
-                rating
+            context,
+            title,
+            year,
+            cast,
+            genre,
+            poster,
+            rating
         )
     }
 
@@ -116,22 +114,22 @@ class MoviesViewModel(application: Application) :
                 val movieRating: Float = parentArrayList.getString("rating").toFloat()
 
                 val movie: Movie = Movie(
-                        title = movieTitle,
-                        year = movieYear,
-                        cast = movieCast,
-                        genre = movieGenres,
-                        rating = movieRating,
-                        poster = ""
+                    title = movieTitle,
+                    year = movieYear,
+                    cast = movieCast,
+                    genre = movieGenres,
+                    rating = movieRating,
+                    poster = ""
                 )
 
                 insertData(
-                        context,
-                        movieTitle,
-                        movieYear,
-                        movieCast,
-                        movieGenres,
-                        "poster",
-                        movieRating
+                    context,
+                    movieTitle,
+                    movieYear,
+                    movieCast,
+                    movieGenres,
+                    "poster",
+                    movieRating
                 )
 
                 dataList.add(movie)

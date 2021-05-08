@@ -2,7 +2,6 @@ package co.yap.master_detailapplication.ui.home
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.Observer
@@ -16,8 +15,7 @@ import co.yap.master_detailapplication.utils.SharedPreferencesHelper
 import com.test.androidcodechallenge.viewmodel.MoviesViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
 
-class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
-        MoviesInterface.View {
+class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>() {
 
     override fun getBindingVariable(): Int = BR.viewModel
 
@@ -28,28 +26,18 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setObservers()
         viewModel.moviesSearchHeaderAdapter.setItemListener(movieItemClickListener)
         viewModel.moviesSearchHeaderAdapter.allowFullItemClickListener = true
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun setObservers() {
-        viewModel.searchQuery.observe(this, Observer {
-            viewModel.moviesSearchHeaderAdapter.filter.filter(it)
-        })
-    }
 
     private val movieItemClickListener = object : OnItemClickListener {
         override fun onItemClick(view: View, data: Any, pos: Int) {
             val action =
-                    MoviesHomeFragmentDirections.actionMoviesHomeFragmentToMovieDetailFragment(
-                            data as Movies
-                    )
+                MoviesHomeFragmentDirections.actionMoviesHomeFragmentToMovieDetailFragment(
+                    data as Movies
+                )
             findNavController().navigate(action)
         }
     }
@@ -57,30 +45,30 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
 
     private fun setSearchView() {
         svMovies.isFocusableInTouchMode
-        svMovies.isIconified = false
         svMovies.setIconifiedByDefault(false)
         svMovies.setOnQueryTextListener(object :
-                SearchView.OnQueryTextListener {
+            SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 viewModel.searchQuery.value = query
-                if (!query.isNullOrEmpty() && !query.isNullOrBlank()) return true else return false
+                viewModel.moviesSearchHeaderAdapter.filter.filter(query)
+
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 viewModel.searchQuery.value = newText
-                if (!newText.isNullOrEmpty() && !newText.isNullOrBlank()) return true else return false
-
+                viewModel.moviesSearchHeaderAdapter.filter.filter(newText)
+                return true
             }
         })
-
         hideKeyboard(svMovies)
         svMovies.clearFocus()
-
     }
 
     override fun onStart() {
         super.onStart()
         loadMoviesList()
+
     }
 
     override fun onResume() {
@@ -104,32 +92,42 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
                     moviesByYear?.get(it)?.let { it1 -> hashSetObject.add(it1.year) }
                 }
                 hashSetObject.sorted().forEachIndexed { index, movieAtIndex ->
-                    viewModel.sortedMovieListLiveData?.add(Movies("", movieAtIndex, emptyList(), emptyList(), "", 0F))
+                    viewModel.sortedMovieListLiveData?.add(
+                        Movies(
+                            "",
+                            movieAtIndex,
+                            emptyList(),
+                            emptyList(),
+                            "",
+                            0F
+                        )
+                    )
 
-                    activity?.let { viewModel.getAllMoviesFromDB(movieAtIndex) }!!.observe(this, Observer { movies ->
-                        viewModel.sortedMovieListLiveData?.addAll(movies)
-                        viewModel.sortedMovieListLiveData?.sortBy { sortedMovie ->
-                            sortedMovie.year
-                        }
+                    activity?.let { viewModel.getAllMoviesFromDB(movieAtIndex) }!!
+                        .observe(this, Observer { movies ->
+                            viewModel.sortedMovieListLiveData?.addAll(movies)
+                            viewModel.sortedMovieListLiveData?.sortBy { sortedMovie ->
+                                sortedMovie.year
+                            }
 
-                        val sortedMovies = viewModel.sortedMovieListLiveData
-                        sortedMovies.sortBy { sortedMovie ->
-                            sortedMovie.year
-                        }
-                        SharedPreferencesHelper.putList(sortedMovies)
+                            SharedPreferencesHelper.putList(viewModel.sortedMovieListLiveData)
 
-                        if (index == hashSetObject.size - 1) {
+                            if (index == hashSetObject.size - 1) {
 
-                            viewModel.moviesSearchHeaderAdapter.setList(SharedPreferencesHelper.getList().distinct())
-                            progressBar.setVisibility(View.GONE)
+                                viewModel.moviesSearchHeaderAdapter.setList(
+                                    SharedPreferencesHelper.getList().distinct()
+                                )
+                                progressBar.setVisibility(View.GONE)
 
-                        }
-                    })
+                            }
+                        })
                 }
             })
 
         } else {
-            viewModel.moviesSearchHeaderAdapter.setList(SharedPreferencesHelper.getList().distinct())
+            viewModel.moviesSearchHeaderAdapter.setList(
+                SharedPreferencesHelper.getList().distinct()
+            )
             progressBar.setVisibility(View.GONE)
         }
     }
@@ -139,5 +137,4 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>(),
         viewModel.clickEvent.removeObservers(this)
         super.onDestroy()
     }
-
 }
