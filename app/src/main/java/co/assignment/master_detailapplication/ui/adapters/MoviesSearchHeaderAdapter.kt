@@ -1,6 +1,7 @@
 package co.assignment.master_detailapplication.ui.adapters
 
 import android.widget.Filter
+import androidx.databinding.ObservableField
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import co.assignment.master_detailapplication.R
@@ -18,6 +19,7 @@ class MoviesSearchHeaderAdapter(
         const val VIEW_TYPE_ONE = 1
         const val VIEW_TYPE_TWO = 2
     }
+      var showError: ObservableField<Boolean> = ObservableField(false)
 
     var filter: ItemFilter = ItemFilter()
     private var filteredMoviesList: MutableList<Movies> = moviesList
@@ -48,6 +50,7 @@ class MoviesSearchHeaderAdapter(
     }
 
     override fun getItemCount(): Int {
+        if (moviesList.size == 0) showError.set(true) else showError.set(false)
         return moviesList.size
     }
 
