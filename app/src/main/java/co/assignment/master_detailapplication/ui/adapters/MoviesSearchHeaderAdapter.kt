@@ -44,26 +44,34 @@ class MoviesSearchHeaderAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (moviesList.distinct()[position].title.isNullOrEmpty()) VIEW_TYPE_ONE else VIEW_TYPE_TWO
+        return if (moviesList[position].title.isNullOrEmpty()) VIEW_TYPE_ONE else VIEW_TYPE_TWO
     }
 
     override fun getItemCount(): Int {
         return moviesList.size
     }
 
+
+    override fun getDataForPosition(position: Int): Movies {
+        return moviesList[position]
+    }
+
     inner class ItemFilter() : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
+
             val charString = constraint.toString()
             if (charString.isEmpty() || charString.isBlank()) {
                 moviesList = filteredMoviesList
             } else {
+                moviesList = filteredMoviesList
                 val filteredList = java.util.ArrayList<Movies>()
                 for (movies in moviesList) {
-                    if (movies.title.toLowerCase().contains(charString)) {
+                    if (movies.title.toLowerCase().contains(charString) || movies.title.toLowerCase().startsWith(charString)) {
                         filteredList.add(movies)
                     }
                 }
                 moviesList = filteredList
+
             }
 
             val filterResults = Filter.FilterResults()
@@ -72,11 +80,12 @@ class MoviesSearchHeaderAdapter(
             return filterResults
         }
 
-        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            if (results?.values != null && constraint.toString().isNotEmpty() && constraint.toString().isNotBlank()) {
+        override fun publishResults(charSequence: CharSequence?, results: FilterResults?) {
+            if (results?.values != null && charSequence.toString().isNotEmpty() && charSequence.toString().isNotBlank()) {
                 val searchResults = segregateViews(results?.values as MutableList<Movies>)
                 moviesList = searchResults
                 notifyDataSetChanged()
+
             } else {
                 moviesList = filteredMoviesList
                 notifyDataSetChanged()

@@ -45,7 +45,7 @@ abstract class BaseBindingRecyclerAdapter<T : Any, VH : RecyclerView.ViewHolder>
             }
     }
 
-    fun getDataForPosition(position: Int): T {
+    open fun getDataForPosition(position: Int): T {
         return list[position]
     }
 
@@ -64,22 +64,6 @@ abstract class BaseBindingRecyclerAdapter<T : Any, VH : RecyclerView.ViewHolder>
 
     }
 
-    fun addListItem(list: T) {
-        this.list.add(list)
-        notifyItemInserted(this.list.size)
-    }
-
-    fun addList(list: List<T>) {
-        val from = this.list.size
-        this.list.addAll(list)
-        notifyItemRangeInserted(from, this.list.size)
-    }
-
-    fun setItemAt(position: Int, item: T) {
-        this.list[position] = item
-        notifyItemChanged(position)
-    }
-
     fun removeItemAt(position: Int) {
         this.list.removeAt(position)
         notifyItemRemoved(position)
@@ -92,14 +76,6 @@ abstract class BaseBindingRecyclerAdapter<T : Any, VH : RecyclerView.ViewHolder>
 
     fun setItemListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
-    }
-
-    abstract inner class ViewHolder(private val binding: ViewDataBinding) :
-            RecyclerView.ViewHolder(binding.root) {
-        fun bind(obj: T) {
-//            binding.setVariable(BR.dataList, obj)
-//            binding.executePendingBindings()
-        }
     }
 
 }

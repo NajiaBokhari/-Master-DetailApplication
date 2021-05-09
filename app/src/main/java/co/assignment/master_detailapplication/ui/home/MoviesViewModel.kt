@@ -11,7 +11,6 @@ import co.assignment.master_detailapplication.data.Movies
 import co.assignment.master_detailapplication.networking.interfaces.IRepositoryHolder
 import co.assignment.master_detailapplication.networking.models.Movie
 import co.assignment.master_detailapplication.networking.models.MoviesList
-import co.assignment.master_detailapplication.networking.models.RetroApiResponse
 import co.assignment.master_detailapplication.networking.repository.AuthRepository
 import co.assignment.master_detailapplication.ui.adapters.MoviesSearchHeaderAdapter
 import org.json.JSONObject
@@ -80,23 +79,6 @@ class MoviesViewModel(application: Application) :
         return movieListLiveData
     }
 
-    override fun getMoviesRequest() {
-
-//        launch {
-//            when (val response = repository.getMovies()) {
-//                is RetroApiResponse.Success -> {
-//                    moviesList = response.data
-//                    clickEvent.setValue(MOVIE_ITEM_CLICK)
-//                }
-//
-//                is RetroApiResponse.Error -> {
-//                    state.error = response.error.message
-//                }
-//            }
-//        }
-    }
-
-
     fun loadLocalMoviesList(): ArrayList<Movie> {
 
         var dataList: ArrayList<Movie> = arrayListOf()
@@ -109,7 +91,7 @@ class MoviesViewModel(application: Application) :
                 val movieYear: Int = parentArrayList.getInt("year")
                 val movieCast: ArrayList<String> = getCasts(parentArrayList, "cast")
                 val movieGenres: ArrayList<String> = getCasts(parentArrayList, "genres")
-                val movieRating: Float = parentArrayList.getString("rating").toFloat()
+                val movieRating: Float = parentArrayList.getInt("rating").toFloat()
 
                 val movie: Movie = Movie(
                         title = movieTitle,
@@ -134,7 +116,6 @@ class MoviesViewModel(application: Application) :
 
             }
         }
-
         return dataList
     }
 

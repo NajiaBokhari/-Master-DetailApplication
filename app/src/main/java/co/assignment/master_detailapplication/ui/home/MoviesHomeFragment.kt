@@ -30,6 +30,10 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>() {
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setSearchView()
+     }
 
     private val movieItemClickListener = object : OnItemClickListener {
         override fun onItemClick(view: View, data: Any, pos: Int) {
@@ -77,8 +81,7 @@ class MoviesHomeFragment : BaseBindingFragment<MoviesInterface.ViewModel>() {
     }
 
     private fun loadMoviesList() {
-        setSearchView()
-        progressBar.setVisibility(View.VISIBLE)
+         progressBar.setVisibility(View.VISIBLE)
         if (!SharedPreferencesHelper.firstRun) {
             SharedPreferencesHelper.firstRun = true
 

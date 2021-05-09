@@ -15,7 +15,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -137,8 +137,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="10dp"
-                android:nestedScrollingEnabled="false"
-                android:visibility="@{viewModel.state.flickerPhotos.size() > 0 ? View.VISIBLE : View.GONE }"
+                 android:visibility="@{viewModel.state.flickerPhotos.size() > 0 ? View.VISIBLE : View.GONE }"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

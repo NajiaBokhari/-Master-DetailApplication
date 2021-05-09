@@ -21,7 +21,6 @@ interface MoviesInterface {
         var movieLiveData: LiveData<Movies>?
         var sortedMovieListLiveData: ArrayList<Movies>
         var movieListLiveData: LiveData<List<Movies>>?
-        fun getMoviesRequest()
         fun getAllSortedMoviesFromDB(): LiveData<List<Movies>>?
         fun getAllMoviesFromDB(year: Int): LiveData<List<Movies>>?
         fun getMovieDetails(any: String): LiveData<Movies>?

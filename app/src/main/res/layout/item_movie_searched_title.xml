@@ -14,22 +14,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
         android:foregroundGravity="left"
         android:orientation="vertical"
-        android:paddingRight="5dp">
+        android:padding="6dp">
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSearchedMovieTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@{viewModel.movie.title}"
             android:textColor="@color/red"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="2020" />
