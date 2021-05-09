@@ -24,7 +24,7 @@
         android:padding="12dp"
         android:singleLine="true"
         android:text="@{viewModel.name}"
-        android:textColor="@color/red"
+        android:textColor="@color/colorPrimary"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -9,6 +9,7 @@ import co.assignment.master_detailapplication.networking.models.MoviesList
 class MovieDetailState : BaseState(), MovieDetailInterface.State {
     override var movies: ObservableField<MoviesList> = ObservableField()
     override var movie: ObservableField<Movies> = ObservableField()
+    override var showLoader: ObservableField<Boolean> = ObservableField()
     override var flickerPhotos: ObservableArrayList<String> = ObservableArrayList()
 
 }

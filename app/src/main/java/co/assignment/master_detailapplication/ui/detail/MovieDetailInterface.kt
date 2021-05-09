@@ -20,6 +20,7 @@ interface MovieDetailInterface {
     interface State : IBase.State {
         var movies: ObservableField<MoviesList>
         var movie: ObservableField<Movies>
+        var showLoader: ObservableField<Boolean>
         var flickerPhotos: ObservableArrayList<String>
     }
 }

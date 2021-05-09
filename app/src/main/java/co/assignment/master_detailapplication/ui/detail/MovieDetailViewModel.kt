@@ -26,7 +26,7 @@ class MovieDetailViewModel(application: Application) :
 
     override fun onCreate() {
         super.onCreate()
-
+        state.showLoader.set(true)
         state.movie.get()?.genre?.let { genreAdapter.setList(it) }
         state.movie.get()?.cast?.let { castAdapter.setList(it) }
         state.movie.get()?.title?.let {
@@ -50,6 +50,8 @@ class MovieDetailViewModel(application: Application) :
                     state.flickerPhotos.addAll(flickerPhotos)
                     state.flickerPhotos?.let {
                         flickerAdapter.setList(it)
+                        state.showLoader.set(false)
+
                     }
                 }
 
