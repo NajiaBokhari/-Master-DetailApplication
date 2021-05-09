@@ -82,18 +82,18 @@ class MoviesViewModel(application: Application) :
 
     override fun getMoviesRequest() {
 
-        launch {
-            when (val response = repository.getMovies()) {
-                is RetroApiResponse.Success -> {
-                    moviesList = response.data
-                    clickEvent.setValue(MOVIE_ITEM_CLICK)
-                }
-
-                is RetroApiResponse.Error -> {
-                    state.error = response.error.message
-                }
-            }
-        }
+//        launch {
+//            when (val response = repository.getMovies()) {
+//                is RetroApiResponse.Success -> {
+//                    moviesList = response.data
+//                    clickEvent.setValue(MOVIE_ITEM_CLICK)
+//                }
+//
+//                is RetroApiResponse.Error -> {
+//                    state.error = response.error.message
+//                }
+//            }
+//        }
     }
 
 

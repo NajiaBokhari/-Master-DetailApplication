@@ -12,13 +12,14 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imageView"
+        square="@{false}"
+        src="@{viewModel.name}"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:backgroundTint="@color/red"
         android:layout_margin="4dp"
+        android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/card_border_container" />
+        app:layout_constraintTop_toTopOf="parent" />
 </layout>

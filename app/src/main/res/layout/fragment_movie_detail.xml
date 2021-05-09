@@ -12,7 +12,7 @@
             type="co.assignment.master_detailapplication.ui.detail.MovieDetailViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -72,7 +72,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvGenre"
-                grids="@{2}"
+                grids="@{1}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -100,6 +100,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCasts"
+                checkItemSpan="@{true}"
                 grids="@{2}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,25 +125,26 @@
                 android:textColor="@color/red"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/rvCasts"
-                android:visibility="@{viewModel.state.movie.cast.size() > 0 ? View.VISIBLE : View.GONE }" />
-
+                android:visibility="@{viewModel.state.flickerPhotos.size() > 0 ? View.VISIBLE : View.GONE }"
+                app:layout_constraintTop_toBottomOf="@+id/rvCasts" />
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvFlickerImages"
-                grids="@{4}"
+                grids="@{2}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="10dp"
                 android:nestedScrollingEnabled="false"
+                android:visibility="@{viewModel.state.flickerPhotos.size() > 0 ? View.VISIBLE : View.GONE }"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvFlickerCaption"
-                app:recycleViewAdapter="@{viewModel.flickerAdapter}"
-                />
+                app:recycleViewAdapter="@{viewModel.flickerAdapter}" />
+
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

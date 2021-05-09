@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,44 +20,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:foregroundGravity="left"
-            android:orientation="vertical"
-            android:paddingRight="5dp"
-            android:visibility="@{viewModel.type.equals(AdapterItemType.ITEM_CAST_TYPE.name) ? View.VISIBLE : View.GONE }">
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMovieTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="3"
-                android:paddingBottom="8dp"
-                android:text="@{viewModel.name}"
-                android:textColor="@color/red"
-                android:textSize="12sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="title" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            layout="@layout/layout_genre"
+            android:visibility="@{viewModel.type.equals(AdapterItemType.ITEM_CAST_TYPE.name) ? View.VISIBLE : View.GONE }"
+            app:viewModel="@{viewModel}" />
 
         <include
             layout="@layout/layout_genre"
             android:visibility="@{viewModel.type.equals(AdapterItemType.ITEM_GENRE_TYPE.name) ? View.VISIBLE : View.GONE }"
             app:viewModel="@{viewModel}" />
 
-
         <include
             layout="@layout/layout_flicker_images"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="center_horizontal"
             android:visibility="@{viewModel.type.equals(AdapterItemType.ITEM_IMAGE_TYPE.name) ? View.VISIBLE : View.GONE }"
             app:viewModel="@{viewModel}" />
 
